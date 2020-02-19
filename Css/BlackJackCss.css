@@ -41,3 +41,8 @@ table,th,td{
     border:1px solid white;
     padding:5px;
 }
+
+.blackJackRow-1 img{
+   width:25%;
+   padding:10px; 
+}
