@@ -6,6 +6,8 @@ Bot:{Div:"#botBox",Result:"#botResult",Score:0},
 Win:0,
 Lose:0,
 Draw:0,
+Hit:true,
+Stand:false,
 };
 
 
@@ -23,21 +25,71 @@ document.querySelector("#blackJackDeal").addEventListener('click',blackJackDeal)
 
 
 function blackJackDeal(){
-   let Winner = decideWinner();
-  console.log(Winner);
-  displayWin(Winner);
-  updateTable();
+  
+ // Select All Images element from yourBox Div & return them as array of objects :
+ let youImages = document.querySelector(BlackJack['You']['Div']).querySelectorAll('img');
+ 
+ // Select All Images element from botBox Div  & return them as array of objects:
+ let botImages = document.querySelector(BlackJack['Bot']['Div']).querySelectorAll('img');     
+ 
+
+ // It will remove all images object(Element) from yourBox Div(Object):
+  for(let i =0 ; i < youImages.length ; i++ )
+      youImages[i].remove();
+ 
+// It will remove all images object(Element) from yourBox Div(Object):      
+  for(let i =0 ; i < botImages.length ; i++ )
+      botImages[i].remove();
+
+  // It will reset bot and your player Score in Backend(Javascript) :
+  BlackJack['You']['Score'] = 0;
+  BlackJack['Bot']['Score'] = 0;
+ 
+  // It will reset your Player score and color in frontend :
+  document.querySelector(BlackJack['You']['Result']).textContent = 0 ;
+  document.querySelector(BlackJack['You']['Result']).style.color = "white";
+ 
+  // It will reset bot Player score and color in frontend :
+  document.querySelector(BlackJack['Bot']['Result']).textContent = 0 ;
+  document.querySelector(BlackJack['Bot']['Result']).style.color = "white";
+
+  // It will reset message header: 
+  document.querySelector('#header').textContent = "Let's Play";
+  document.querySelector('#header').style.color = "White";
+ 
+  //It will reset click buttons(Hit and Stand) :
+  BlackJack['Hit'] =true;
+  BlackJack['Stand'] = false;
 }
 
 
 function blackJackStand(){
    
-  let Card = randomCard();
+  if(BlackJack['Stand']){
+    
+    BlackJack['Hit'] = false ;
+
+    while(BlackJack['Bot']['Score'] <= 16){
+    let Card = randomCard();
     showCard(Card,"Bot");
     updateScore(Card,"Bot");
     showScore("Bot");
-
+    }
+    
  
+    if(BlackJack['Bot']['Score'] > 16){
+      
+   let Winner = decideWinner();
+   console.log(Winner);
+   displayWin(Winner);
+   updateTable();
+
+   BlackJack['Stand'] = false;
+  
+  
+  }
+
+}
 }
 
 
@@ -78,6 +130,8 @@ function displayWin(Winner){
 
 function blackJackHit(){
  
+if(BlackJack['Hit']){
+
  let Card = randomCard();
  
  showCard(Card,"You");
@@ -86,6 +140,8 @@ function blackJackHit(){
 
  updateScore(Card,'You');
  showScore('You');
+ BlackJack['Stand'] = true ;
+}
 }
 
 
