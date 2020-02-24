@@ -63,7 +63,7 @@ function blackJackDeal(){
 }
 
 
-function blackJackStand(){
+async function blackJackStand(){
    
   if(BlackJack['Stand']){
     
@@ -74,11 +74,9 @@ function blackJackStand(){
     showCard(Card,"Bot");
     updateScore(Card,"Bot");
     showScore("Bot");
+     await sleep(1000);
     }
-    
- 
-    if(BlackJack['Bot']['Score'] > 16){
-      
+
    let Winner = decideWinner();
    console.log(Winner);
    displayWin(Winner);
@@ -90,8 +88,10 @@ function blackJackStand(){
   }
 
 }
-}
 
+function sleep(ms){
+  return new Promise(resolve => setTimeout(resolve,ms));
+}
 
 function updateTable(){
 
