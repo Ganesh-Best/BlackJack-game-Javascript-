@@ -1,3 +1,5 @@
+
+// It is an object( DataStructure ) used for storing informations related to BlackJack :   
 let BlackJack = {
 Card:['2','3','4','5','6','7','8','9','10','J','K','Q','A'],
 cardValue:{'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'10':10,'A':[1,11],'J':10,'K':10,'Q':10},
@@ -6,24 +8,27 @@ Bot:{Div:"#botBox",Result:"#botResult",Score:0},
 Win:0,
 Lose:0,
 Draw:0,
-Hit:true,
+Hit:true, 
 Stand:false,
 };
 
-
+// It is Swish audio object,play when an card show to frontend:
 const   Swish = new Audio('BlackJackAssets/swish.m4a');
+//It is Cash audio object ,play when You win the match:
 const   Cash  = new Audio('BlackJackAssets/cash.mp3');
+//It is Aww audio object ,play when You Lose the match:
 const   Aww   = new Audio('BlackJackAssets/aww.mp3');
 
+//It is an click  event ,trigger when user hit Hit button:   
 document.querySelector("#blackJackHit").addEventListener('click',blackJackHit);
 
-
+//It is an click  event ,trigger when user hit Stand button:   
 document.querySelector("#blackJackStand").addEventListener('click',blackJackStand);
-
+//It is an click  event ,trigger when user  Hit Deal button:   
 document.querySelector("#blackJackDeal").addEventListener('click',blackJackDeal);
 
 
-
+// It is function ,run when someone  hit Deal Button:
 function blackJackDeal(){
   
  // Select All Images element from yourBox Div & return them as array of objects :
@@ -62,7 +67,7 @@ function blackJackDeal(){
   BlackJack['Stand'] = false;
 }
 
-
+// It is an asynchrounous function ,run when someone  hit Stand Button:
 async function blackJackStand(){
    
   if(BlackJack['Stand']){
@@ -93,6 +98,8 @@ function sleep(ms){
   return new Promise(resolve => setTimeout(resolve,ms));
 }
 
+
+// It is function used to update  table from frontend 
 function updateTable(){
 
   document.querySelector("#Win").textContent = BlackJack['Win'];
