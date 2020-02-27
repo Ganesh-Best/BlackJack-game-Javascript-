@@ -99,7 +99,7 @@ function sleep(ms){
 }
 
 
-// It is function used to update  table from frontend 
+// It is function used to update  table from frontend[Html document or User-Interface] 
 function updateTable(){
 
   document.querySelector("#Win").textContent = BlackJack['Win'];
@@ -108,50 +108,50 @@ function updateTable(){
 
 }
 
+// It will display Winner message ,also updates Win,Lose Draw variable Value:
 function displayWin(Winner){
  
   if(Winner === "Bot"){
      
-    document.querySelector("#header").textContent = "You Lose :(^ _ ^)";
+    document.querySelector("#header").textContent = "You Lose :(^ _ ^)"; // Show Lose message when User gets lose:
     document.querySelector("#header").style.color = "Red";
-    BlackJack['Lose']++;
-    console.log(BlackJack['Lose']);
-    Aww.play();
+    BlackJack['Lose']++; // Update Lose Variable Value:
+    Aww.play(); // It play Aww sound when User gets Lose:
 
   }else if(Winner === "You"){
      
-    document.querySelector("#header").textContent = "You Won :)";
+    document.querySelector("#header").textContent = "You Won :)"; // Show win message when User gets win:
     document.querySelector("#header").style.color = "Green";
-    BlackJack['Win']++;
+    BlackJack['Win']++; // Update Win Variable Value :
 
-    console.log(BlackJack['Win']);
-    Cash.play();
+    Cash.play(); // It play Cash Sound When User gets Win:
   }else{
        
-    document.querySelector("#header").textContent = "Match Draw :(^ _ ^)";
-     BlackJack['Draw']++ ;
-     console.log(BlackJack['Drwa']);
+    document.querySelector("#header").textContent = "Match Draw :(^ _ ^)"; //// Show Draw message when User gets Draw:
+     BlackJack['Draw']++ ; // Update Draw Variable Value:
+    
   }
 
 }
 
+// This function will run/execute when some hit Hit button:
 function blackJackHit(){
  
-if(BlackJack['Hit']){
+if(BlackJack['Hit']){  // It  will check Hit Value,If Hit value true then  all code of Hit function will execute:  
 
- let Card = randomCard();
+ let Card = randomCard();  // It will generate random card from 2,3,4,5,6,7,8,9,10,A(either 1 or 11),J,K,Q:
  
- showCard(Card,"You");
+ showCard(Card,"You"); // It will show card to User Box :
 
  
 
- updateScore(Card,'You');
- showScore('You');
- BlackJack['Stand'] = true ;
+ updateScore(Card,'You'); // It will Update score from backend(Javascript):
+ showScore('You'); // It will update score from User-Interface :
+ BlackJack['Stand'] = true ; // It Update Stand Value  
 }
 }
 
-
+// This function decide who is winner between User And Bot:
 function decideWinner(){
   
   if(BlackJack['You']['Score'] > 21 && BlackJack['Bot']['Score'] > 21) 
@@ -173,28 +173,31 @@ function decideWinner(){
 
 }
 
+//It will generate random card and return it:
 function randomCard(){
       
     return BlackJack['Card'][Math.floor(Math.random()*13)];
 
 }
+// It will show card ,when we provide card & Player{ Either Bot,You }:
 function showCard(Card,Player){
 
     if(BlackJack[Player]['Score'] <= 21){
-    console.log(Card); 
-    let Img = document.createElement('img');
-    Img.src = `BlackJackAssets/${Card}.png`;
-    document.querySelector(BlackJack[Player]['Div']).appendChild(Img);
-    Swish.play();
+    let Img = document.createElement('img'); // Create Image Object :
+    Img.src = `BlackJackAssets/${Card}.png`; // Link Image to Image Object:
+    document.querySelector(BlackJack[Player]['Div']).appendChild(Img); // Add Image Object to  Player{Either You,bot}:
+    Swish.play(); // It will Play Swish Sound :
 
     }
 }
 
+// This function Will Update Score in Javascript :
 function updateScore(Card,Player){
 
-     
+     // It checks if Card is Ace or Not  
        if(Card === 'A'){
-        
+          // If card Is Ace Then:
+           // This logic add Ace Card Value, Either it will 11 or 1:
           if( BlackJack[Player]['Score'] + BlackJack['cardValue'][Card][1] <=  21 ){
              BlackJack[Player]['Score'] += BlackJack['cardValue'][Card][1];
             }else{
@@ -205,17 +208,24 @@ function updateScore(Card,Player){
          
 
           }else{
+            // Card is Not Ace :
+            // It will update Card value according to Card Corresponding value:    :
             BlackJack[Player]['Score']  += BlackJack['cardValue'][Card] ;  
-            console.log(BlackJack[Player]['Score']);
+            
           }
 }
 
+// This function will Update Score In User-Interface   :
+function showScore(Player){
 
-function showScore(Player){  
+  //It will check Player{You/Bot} Score :
     if(BlackJack[Player]['Score'] < 22){
+  //if Score Less than equal to 21 then it will show in User-Interface:
     document.querySelector(BlackJack[Player]['Result']).textContent = BlackJack[Player]['Score'] ;
     }else{
 
+  //If Score is Greater than 21 than it will show Bust Message to User-Interface:
+        
         document.querySelector(BlackJack[Player]['Result']).textContent = "Bust !";
         document.querySelector(BlackJack[Player]['Result']).style.color = "Red";
 
